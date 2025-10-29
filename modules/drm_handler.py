@@ -299,31 +299,7 @@ async def drm_handler(bot: Client, m: Message):
                 response = requests.get('https://api.classplusapp.com/cams/uploader/video/jw-signed-url', headers=headers, params=params)
                 url   = response.json()['url']
 
-            elif # === Classplus CDN signing (using hacker-non-drm API) ===
-    unsigned_url = url.split("?")[0].strip()
 
-    HACKER_API = "https://hacker-non-drm.vercel.app/get_signed_url"
-    HACKER_TOKEN = token_cp   # ✅ or replace with your token variable name
-
-    params = {
-        "url": unsigned_url,
-        "token": HACKER_TOKEN
-    }
-
-    try:
-        response = requests.get(HACKER_API, params=params, timeout=15)
-        data = response.json()
-
-        if isinstance(data, dict) and data.get("url"):
-            url = data["url"]
-            print(f"[Signed ✅] {url}")
-        else:
-            print(f"[⚠️ Signing Failed] {response.text}")
-            url = unsigned_url
-
-    except Exception as e:
-        print(f"[Error] {e}")
-        url = unsigned_url
 
             if "edge.api.brightcove.com" in url:
                 bcov = f'bcov_auth={cwtoken}'
